@@ -51,20 +51,6 @@ A fast, **fully-static** personal portfolio built from scratch — no framework,
 └── _headers                # security headers (Netlify / Cloudflare Pages)
 ```
 
-## 🚀 Deploy — 100% free
-
-**Option A — Netlify / Cloudflare Pages** ⭐ _(recommended — gets you an A+ on securityheaders.com thanks to `_headers`)_
-
-1. Go to [app.netlify.com/drop](https://app.netlify.com/drop) (or Cloudflare Pages)
-2. **Drag & drop this whole folder**
-3. Done ✅ — free HTTPS, and `_headers` is applied automatically
-
-**Option B — GitHub Pages** 🐙
-
-1. Push these files to a repo → **Settings → Pages → Deploy from `main`**
-2. Live at `https://<username>.github.io`
-   > ⚠️ GitHub Pages ignores `_headers` (no custom HTTP security headers)
-
 ## 🛡️ Security
 
 Hardened as far as a static page can be:
