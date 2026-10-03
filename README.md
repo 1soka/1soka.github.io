@@ -2,19 +2,19 @@
 
 <img src="assets/banner.png" alt="1soka — Junior Systems Software Engineer" width="100%">
 
-# `1soka` — Portfolio 🔵🖥️
+# `1soka` — Portfolio 🧃🍇
 
 **Junior Systems Software Engineer** · low-level · systems · embedded
 *understand to better protect* 🛡️
 
-![C](https://img.shields.io/badge/C-2F5BFF?style=flat-square&logo=c&logoColor=white)
-![C++](https://img.shields.io/badge/C++-2F5BFF?style=flat-square&logo=cplusplus&logoColor=white)
-![Assembly](https://img.shields.io/badge/Assembly-2F5BFF?style=flat-square&logo=gnu&logoColor=white)
-![Linux](https://img.shields.io/badge/Linux-2F5BFF?style=flat-square&logo=linux&logoColor=white)
-![Bash](https://img.shields.io/badge/Bash-2F5BFF?style=flat-square&logo=gnubash&logoColor=white)
-![Docker](https://img.shields.io/badge/Docker-2F5BFF?style=flat-square&logo=docker&logoColor=white)
-![Git](https://img.shields.io/badge/Git-2F5BFF?style=flat-square&logo=git&logoColor=white)
-![Vim](https://img.shields.io/badge/Vim-2F5BFF?style=flat-square&logo=vim&logoColor=white)
+![C](https://img.shields.io/badge/C-FA0FB5?style=flat-square&logo=c&logoColor=061047)
+![C++](https://img.shields.io/badge/C++-002CD1?style=flat-square&logo=cplusplus&logoColor=C5C8FC)
+![Assembly](https://img.shields.io/badge/Assembly-061047?style=flat-square&logo=gnu&logoColor=4ADEF7)
+![Linux](https://img.shields.io/badge/Linux-FA0FB5?style=flat-square&logo=linux&logoColor=061047)
+![Bash](https://img.shields.io/badge/Bash-002CD1?style=flat-square&logo=gnubash&logoColor=C5C8FC)
+![Docker](https://img.shields.io/badge/Docker-061047?style=flat-square&logo=docker&logoColor=4ADEF7)
+![Git](https://img.shields.io/badge/Git-FA0FB5?style=flat-square&logo=git&logoColor=061047)
+![Vim](https://img.shields.io/badge/Vim-002CD1?style=flat-square&logo=vim&logoColor=C5C8FC)
 
 </div>
 
