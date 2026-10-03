@@ -1083,6 +1083,65 @@ still: function(){ lines = []; script.forEach(function(s){ lines.push(prompt + e
 };
 }
 var SKINS = {
+mphisher: function(el){
+el.classList.add('cov-ascii', 'cov-term');
+el.style.background = 'var(--term)';
+el.style.paddingBottom = '42px';
+el.innerHTML = '<div class="banner">MPHISHER</div><pre></pre>';
+var pre = el.querySelector('pre');
+pre.style.color = 'var(--term-fg)';
+cap(el, L('DÉMO · MPHISHER', 'DEMO · MPHISHER'));
+var caption = el.querySelector('.cov-cap'), start = null, last = -Infinity;
+var names = ['Facebook','Instagram','Snapchat','Twitch','Microsoft','Google','Linkedin','Github','Steam','Twitter','Paypal','Discord'];
+var log = [
+{ at:0, text:'<span class="pr"> * Running on http://127.0.0.1:5000</span>' },
+{ at:450, text:'[-] Website on internet:\n    <span class="ex">https://demo.ngrok.test</span>' },
+{ at:900, text:'<span class="dir">[-] Waiting for victim connection...</span>' },
+{ at:1350, text:'<span class="pr">[-] Press Ctrl+C to stop manually</span>' },
+{ at:2850, text:'<span class="pr">GET / HTTP/1.1 200</span>' },
+{ at:3600, text:'<span class="ex">[+] Data received!</span>' },
+{ at:3950, text:'[-] IP address: <span class="dir">192.0.2.42</span>' },
+{ at:4300, text:'[-] email: <span class="dir">demo@example.test</span>' },
+{ at:4650, text:'[-] password: <span class="ex">********</span>' },
+{ at:5100, text:'<span class="ex">[+] Saved to phish.txt</span>' },
+{ at:5550, text:'<span class="pr">POST /user HTTP/1.1 204</span>' },
+{ at:6100, text:'<span class="dir">[+] Server stopped</span>' },
+{ at:6550, text:'<span class="pr">[-] Select an option:</span> <span class="blk"></span>' }
+];
+function menu(){
+var out = ['<span class="pr">Version 1.0 · Blackholeisoka</span>', ''];
+var cols = el.clientWidth >= 470 ? 3 : 2, rows = 12 / cols;
+for (var y = 0; y < rows; y++){
+var row = [];
+for (var x = 0; x < cols; x++){
+var i = x * rows + y, name = names[i];
+row.push('<span class="ex">[' + ('0' + (i + 1)).slice(-2) + ']</span> ' + name + new Array(11 - name.length).join(' '));
+}
+out.push(row.join(' '));
+}
+out.push('', '<span class="ex">[99]</span> About    <span class="ex">[00]</span> Exit', '');
+return out;
+}
+function draw(t){
+caption.textContent = L('DÉMO · MPHISHER', 'DEMO · MPHISHER');
+if (t < 1500){
+pre.innerHTML = '<span class="pr">$</span> ' + 'python index.py'.slice(0, Math.floor(t / 55)) + '<span class="blk"></span>';
+} else if (t < 4500){
+var choice = t < 3500 ? '' : '01'.slice(0, Math.floor((t - 3500) / 160));
+pre.innerHTML = menu().concat('<span class="pr">[-] Select an option:</span> ' + choice + '<span class="blk"></span>').join('\n');
+} else {
+pre.innerHTML = log.filter(function(line){ return line.at <= t - 4500; }).map(function(line){ return line.text; }).join('\n').split('\n').slice(-11).join('\n');
+}
+}
+return {
+tick: function(now){
+if (start === null || now - start >= 15000) start = now;
+if (now - last < 55) return; last = now;
+draw(now - start);
+},
+still: function(){ draw(11500); }
+};
+},
 term: function(el){
 el.classList.add('cov-term');
 var pre = document.createElement('div'); el.appendChild(pre);
@@ -1485,7 +1544,7 @@ var REPOS = [
 desc:'Un shell minimal écrit from scratch en C : plus de 35 commandes réimplémentées avec les appels système, sans aucune bibliothèque externe.',
 feats:['35+ commandes : ls, cat, grep, sort, diff, chmod…','Sortie colorée : prompt, erreurs, types de fichiers','Expansion glob (cat *.c)','Historique persistant dans ~/.history','Opérations récursives (rm -r) et colonnes alignées'],
 tags:['C','Unix','Shell','CLI','Syscalls'], kw:['terminal','bash','commande','commandes','glob','historique','systeme','bas niveau','low level','from scratch'] },
-{ id:'melsql', repo:'Nodejs-SQL-Terminal', title:'MELSQL', lang:'Node.js', meta:['MIT'], skin:'ascii', cls:'v-r st-dash', featured:true,
+{ id:'melsql', repo:'Nodejs-SQL-Terminal', title:'MELSQL', lang:'Node.js', meta:['MIT'], skin:'ascii', cls:'v-r st-dash', featured:false,
 desc:'Une CLI MySQL en Node.js pour explorer bases, tables et requêtes depuis le terminal, avec une ambiance rétro : ASCII art et dégradés de couleurs.',
 feats:['Connexion et exploration interactive','Requêtes SELECT et DELETE','Historique des commandes','Parcours des tables et colonnes','UI : chalk, gradient-string, figlet, inquirer'],
 tags:['Node.js','MySQL','CLI','JavaScript'], kw:['sql','bdd','base de donnees','database','requete','terminal','retro','ascii','db'] },
@@ -1550,7 +1609,15 @@ desc:'Un site vitrine responsive en HTML / CSS pur, réalisé rapidement comme e
 feats:['Intégration HTML / CSS','Interface responsive','Démo live sur GitHub Pages'],
 tags:['HTML','CSS','Intégration','Responsive'], kw:['html','css','site','vitrine','integration','responsive','front','web'] }
 ];
+REPOS.splice(1, 0, { id:'mphisher', repo:'CLI-MPHISHER-Python', title:'MPHISHER', lang:'Python', meta:['v1.0.0'], skin:'mphisher', cls:'', featured:true,
+desc:'Un outil pédagogique de simulation de phishing en Python : menu CLI avec Rich, page Facebook servie par Flask, tunnel ngrok et affichage des données reçues en temps réel.',
+feats:['Menu Rich : 12 choix, modèle Facebook présent','Serveur Flask et tunnel ngrok automatique','Réception JSON sur /user : IP, email, mot de passe','Affichage des données dans le terminal','Sauvegarde dans phish.txt, puis retour au choix'],
+tags:['Python','Flask','Rich','CLI','Security'], kw:['mphisher','phishing','securite','security','education','educatif','terminal','ngrok','python','flask','rich','simulation'] });
 var REPOS_EN = {"mshell": {"desc": "A minimal shell written from scratch in C: 35+ commands reimplemented with system calls, without any external library.", "feats": ["35+ commands: ls, cat, grep, sort, diff, chmod…", "Colored output: prompt, errors, file types", "Glob expansion (cat *.c)", "Persistent history in ~/.history", "Recursive operations (rm -r) and aligned columns"]}, "melsql": {"desc": "A MySQL CLI in Node.js to explore databases, tables and queries from the terminal, with a retro vibe: ASCII art and color gradients.", "feats": ["Interactive connection and exploration", "SELECT and DELETE queries", "Command history", "Browse tables and columns", "UI: chalk, gradient-string, figlet, inquirer"]}, "dijkstra": {"desc": "Dijkstra’s algorithm finding the shortest path on a grid, visualized with p5.js: walls, visited nodes, start, goal and final path.", "feats": ["Grid drawn on canvas with p5.js", "Explored nodes shown live", "Shortest path tracing", "Walls and obstacles"]}, "regression": {"desc": "A complete linear regression analysis with interactive visualization: data generated on the EDSS scale, regression line, r and R², and prediction.", "feats": ["Computes coefficients a and b", "Means x̄ and ȳ, r and R²", "Interactive chart with Plotly.js", "Prediction form", "Table of intermediate calculations"]}, "weather": {"desc": "The weather for any city via the wttr.in API: search with autocomplete, a background that changes with the weather, hourly and 2-day forecasts.", "feats": ["City search with suggestions", "Dynamic background based on the weather", "Temperature, humidity, wind", "Hourly + 2-day forecasts", "Errors and loading states handled"]}, "discord": {"desc": "A customizable Discord bot: moderation, AI prompt generation and mini-games like werewolf. Still in development.", "feats": ["Configurable moderation module", "Prompt generation with AI", "Werewolf mini-game", "Designed to be easily extended"]}, "pokedex": {"desc": "A scalable REST API in Node.js to query a Pokédex: full CRUD for Pokémon, with Sequelize as the ORM and seed data.", "feats": ["5 CRUD endpoints (create, read, update, delete)", "Node.js + Sequelize (ORM)", "Config via .env file", "Clear structure: models, routes, db"]}, "snake": {"desc": "A Snake game driven by an AI: the snake crosses the grid on its own to eat, thanks to the A* pathfinding algorithm.", "feats": ["A* pathfinding to reach the food", "Score and best score (localStorage)", "Random placement avoiding the body", "Classic version + AI version"]}, "sand": {"desc": "A falling-sand simulation, cellular-automaton style, built with p5.js: each grain reacts to gravity and piles up on the others.", "feats": ["Particle simulation on canvas", "Gravity and grain stacking", "Real-time rendering with p5.js"]}, "redux": {"desc": "A React + Redux project to handle data with CRUD and practice centralized state management: actions, reducers and store.", "feats": ["Full CRUD on the front end", "State management with Redux", "Centralized store, actions and reducers", "Mock data via db.json"]}, "nikeshop": {"desc": "A dynamic e-commerce cart in PHP and JavaScript: add, update and remove products in real time via fetch (AJAX), without reloading the page.", "feats": ["Real-time cart with fetch / AJAX", "Add, update, remove without reload", "Cart data stored as JSON", "PHP + JavaScript front end"]}, "phpmvc": {"desc": "A mini search engine in PHP built with MVC and OOP: search websites, images and videos through external APIs, with a Bootstrap interface.", "feats": ["MVC architecture (Model, Controller, View)", "Web, image and video search", "External APIs (SerpAPI, Pixabay)", "Dynamic loading as you type"]}, "phpmysql": {"desc": "A PHP / MySQL application covering the fundamentals: authentication (login / logout) and CRUD operations on a database.", "feats": ["PHP ↔ MySQL connection", "CRUD: create, read, update, delete", "Login / logout and sessions", "Separate connection, view and logic"]}, "phppoo": {"desc": "A practice project showing the basics of OOP in PHP: classes, inheritance, entity management and database access through PDO instead of raw queries.", "feats": ["Classes and inheritance", "Entity management", "PDO connection", "Model / Controller / Database organization"]}, "devis": {"desc": "A command-line tool that generates professional PDF quotes: itemized lines, discounts and taxes, in several languages, then emails them to the client.", "feats": ["PDF quotes with prices, discounts and taxes", "Multilingual output", "Automatic email sending", "Client management via JSON"]}, "nvim": {"desc": "My complete dev environment on Windows: PowerShell 7 + Neovim with LSP, plugins, an Oh-My-Posh theme and automated setup through symbolic links.", "feats": ["Neovim: LSP, plugins (lazy.nvim), keymaps", "PowerShell 7 and Oh-My-Posh theme", "Setup via symbolic links", "Lazygit, Ripgrep, fd"]}, "esiea": {"desc": "A responsive showcase website in pure HTML / CSS, built quickly as an integration exercise, with a live demo on GitHub Pages.", "feats": ["HTML / CSS integration", "Responsive interface", "Live demo on GitHub Pages"]}};
+REPOS_EN.mphisher = {
+desc:'An educational phishing simulation tool in Python: a Rich CLI menu, a Facebook page served by Flask, an ngrok tunnel and live display of received data.',
+feats:['Rich menu: 12 options, Facebook template included','Flask server and automatic ngrok tunnel','JSON reception on /user: IP, email, password','Data displayed in the terminal','Saved to phish.txt, then back to the option prompt']
+};
 var TAG_EN = {"Graphes": "Graphs", "Jeux": "Games", "IA": "AI", "POO": "OOP", "Intégration": "Integration", "Maths": "Math"}, WIP_EN = { "EN DEV":"IN DEV" };
 function rE(r){ return REPOS_EN[r.id] || {}; }
 function rD(r){ return L(r.desc, rE(r).desc); }
